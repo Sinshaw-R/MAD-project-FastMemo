@@ -48,7 +48,7 @@ In today’s busy world, people especially students often need to jot down ideas
 
    ## 🗂️ Project Management Board
 
-  [View Jira Project Board](#)  
+  [View Jira Project Board](https://tadiostsegaye7.atlassian.net/jira/software/projects/MPFM/boards/2/backlog?atlOrigin=eyJpIjoiYWJmYWZkNzg0ZTE5NDFjYjgyMGYzYzZhOTg3YmUwMTAiLCJwIjoiaiJ9)
 
 
 
