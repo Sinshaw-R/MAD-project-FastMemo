@@ -161,4 +161,114 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void setupToolbar() {
+        toolbar = findViewById(R.id.toolbar);
+        if (toolbar == null) {
+            // Toolbar might not be in layout, that's okay
+            return;
+        }
+        setSupportActionBar(toolbar);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(android.view.Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        // Remove search menu item since search is always visible
+        menu.removeItem(R.id.action_search);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_sort_date_desc) {
+            viewModel.setSortMode(MemoRepository.SORT_BY_DATE_DESC);
+            return true;
+        } else if (id == R.id.action_sort_date_asc) {
+            viewModel.setSortMode(MemoRepository.SORT_BY_DATE_ASC);
+            return true;
+        } else if (id == R.id.action_sort_category) {
+            viewModel.setSortMode(MemoRepository.SORT_BY_CATEGORY);
+            return true;
+        } else if (id == R.id.action_pin_settings) {
+            showPinSettingsDialog();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showPinSettingsDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle("PIN Settings");
+
+        boolean pinEnabled = SecurityHelper.isPinEnabled(this);
+        String[] options = pinEnabled ?
+                new String[]{"Disable PIN", "Change PIN"} :
+                new String[]{"Enable PIN"};
+
+        builder.setItems(options, (dialog, which) -> {
+            if (pinEnabled) {
+                if (which == 0) {
+                    SecurityHelper.setPinEnabled(this, false);
+                    Toast.makeText(this, "PIN disabled", Toast.LENGTH_SHORT).show();
+                } else {
+                    showSetPinDialog();
+                }
+            } else {
+                showSetPinDialog();
+            }
+        });
+        builder.show();
+    }
+
+    private void showSetPinDialog() {
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(this);
+        builder.setTitle("Set PIN");
+
+        TextInputLayout pinLayout = new TextInputLayout(this);
+        TextInputEditText pinInput = new TextInputEditText(this);
+        pinInput.setInputType(android.text.InputType.TYPE_CLASS_NUMBER | android.text.InputType.TYPE_NUMBER_VARIATION_PASSWORD);
+        pinInput.setHint("Enter 4-6 digit PIN");
+        pinLayout.addView(pinInput);
+        pinLayout.setPadding(50, 0, 50, 0);
+
+        builder.setView(pinLayout);
+        builder.setPositiveButton("Set", (dialog, which) -> {
+            String pin = pinInput.getText().toString();
+            if (pin.length() >= 4 && pin.length() <= 6) {
+                SecurityHelper.setPin(this, pin);
+                Toast.makeText(this, "PIN set successfully", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "PIN must be 4-6 digits", Toast.LENGTH_SHORT).show();
+            }
+        });
+        builder.setNegativeButton("Cancel", null);
+        builder.show();
+    }
+
+    private void setupRecyclerView() {
+        adapter = new MemoAdapter(memo -> {
+            Intent intent = new Intent(MainActivity.this, MemoDetailsActivity.class);
+            intent.putExtra("memo_uid", memo.uid);
+            startActivity(intent);
+        });
+        adapter.setOnMemoLongClickListener(memo -> {
+            showDeleteConfirmation(memo);
+            return true;
+        });
+        rvMemos.setLayoutManager(new LinearLayoutManager(this));
+        rvMemos.setAdapter(adapter);
+    }
+
+    private void showDeleteConfirmation(Memo memo) {
+        new com.google.android.material.dialog.MaterialAlertDialogBuilder(this)
+                .setTitle("Delete Memo")
+                .setMessage("Are you sure you want to delete \"" + (memo.title != null && !memo.title.isEmpty() ? memo.title : "this memo") + "\"? This action cannot be undone.")
+                .setPositiveButton("Delete", (dialog, which) -> {
+                    viewModel.delete(memo);
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
+    }
+
 }
