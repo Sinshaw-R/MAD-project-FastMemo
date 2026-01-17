@@ -79,6 +79,105 @@
                 android:visibility="gone" />
         </LinearLayout>
 
+        <!-- Category Filters -->
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp">
+
+            <LinearLayout
+                android:id="@+id/categoryContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="All"
+                    android:checked="true"
+                    android:checkable="true"
+                    app:chipBackgroundColor="@color/red_primary"
+                    app:checkedIconVisible="false"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipClasses"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Classes"
+                    android:checkable="true"
+                    app:chipBackgroundColor="@color/surface_variant_dark"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipLectureNotes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lecture Notes"
+                    android:checkable="true"
+                    app:chipBackgroundColor="@color/surface_variant_dark"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipAssignments"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Assignments"
+                    android:checkable="true"
+                    app:chipBackgroundColor="@color/surface_variant_dark"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipExams"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Exams &amp; Tests"
+                    android:checkable="true"
+                    app:chipBackgroundColor="@color/surface_variant_dark"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipToDo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="To-Do"
+                    android:checkable="true"
+                    app:chipBackgroundColor="@color/surface_variant_dark"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipReminders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Reminders"
+                    android:checkable="true"
+                    app:chipBackgroundColor="@color/surface_variant_dark"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginEnd="8dp" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chipPersonal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Personal"
+                    android:checkable="true"
+                    app:chipBackgroundColor="@color/surface_variant_dark"
+                    android:textColor="@color/text_primary" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
     </LinearLayout>
 
 
